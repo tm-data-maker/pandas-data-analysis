@@ -244,6 +244,37 @@ jupyter notebook
 
 ---
 
+## 📸 Code Examples & Output Screenshots
+
+### 🚗 Pandas Analysis: Vehicle Dataset Manipulation & Boolean Masking
+
+* **Task Description:** Performing complex data manipulations on the automotive `mpg` dataset—including creating calculated Boolean columns, computing percentages, calculating weighted averages for fuel economy, and applying Boolean masking to filter vehicles above the median threshold.
+
+* **Code Execution & Output:**
+  
+  ![Pandas Vehicle Analysis Screenshot](Pandas_Vehicle_Analysis_Screenshot.png)
+
+* **Technical Explanation:**
+  * **String & Boolean Operations:** Uses `.str.startswith()` to flag automatic transmissions and `.sum()` to aggregate total counts.
+  * **Calculated Columns & Averages:** Computes weighted averages combining city and highway metrics (`0.55` and `0.45` weights respectively) to generate the `fuel_economy` column.
+  * **Boolean Masking:** Filters the entire DataFrame dynamically using statistical median values (`.median()`) to isolate high-efficiency vehicles.
+
+
+### 📊 Pandas Exercise: Sales Data Manipulation & Revenue Calculation
+
+* **Task Description:** Creating a DataFrame from a dictionary of items, cleaning and converting data types (`price`), adding new sales columns, calculating total revenue, rounding values, and exporting datasets to CSV and Excel formats.
+
+* **Code Execution & Output:**
+  
+  ![Pandas Sales Analysis Screenshot](Pandas_Sales_Analysis_Screenshot.png)
+
+* **Technical Explanation:**
+  * **Data Structuring:** Initializes a Pandas DataFrame from raw dictionary structures and renames columns for standardisation.
+  * **Data Cleaning & Type Conversion:** Uses `.str.replace()` and `.astype(float)` to clean currency strings and convert them into numerical formats.
+  * **Feature Engineering:** Multiplies price by units sold to create a new `total_revenue` column, applies `.round()` for formatting, and exports the processed data using `.to_csv()` and `.to_excel()`.
+
+---
+
 ## 🧰 Technologies Used
 
 - 🐍 Python
