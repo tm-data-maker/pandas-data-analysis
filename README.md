@@ -1,182 +1,261 @@
-📊 Pandas Data Analysis & Manipulation Repository
-Welcome to the Pandas Learning & Data Analysis Repository! This project was created as part of the Data Technician Skills Bootcamp. It serves as a comprehensive guide and portfolio showcasing data manipulation, cleaning, exploratory analysis, and visualization using Python and Pandas.
-The contents are structured to guide beginners step-by-step from foundational concepts to practical real-world data analysis on retail and sales datasets.
+# 📊 Pandas Data Analysis & Manipulation
 
-📑 Table of Contents
-Repository Structure
-Notebook Breakdowns & Examples
-1. PandasDataFrames_01.ipynb – Fundamentals
-2. PandasDataFrames_02.ipynb – Indexing & Filtering
-3. PandasDataFrames_03.ipynb – Data Cleaning
-4. Sales_Data_Analysis.ipynb – Aggregation & Grouping
-Key Methods Summary
-Learning Outcomes
-How to Run
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?logo=jupyter)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualisation-green)
+![Status](https://img.shields.io/badge/Status-Completed-success)
 
-📁 Repository Structure
-.
-├── 📄 README.md                          # Repository documentation & guide
-├── 📓 PandasDataFrames_01.ipynb          # Intro to DataFrames & basic properties
-├── 📓 PandasDataFrames_02.ipynb          # Slicing, indexing (.loc/.iloc) & filtering
-├── 📓 PandasDataFrames_03.ipynb          # Handling missing values & data cleaning
-├── 📓 Sales_Data_Analysis.ipynb          # Groupby, aggregation & data visualization
-└── 📊 datasets/                          # Project CSV datasets
-    ├── penguins.csv
-    ├── student.csv
-    └── sales_data.csv
+A hands-on collection of **Pandas-based data analysis exercises and projects** completed during the **Data Technician Skills Bootcamp**.
 
-🔍 Notebook Breakdowns & Examples
+This repository demonstrates practical skills in:
 
-1️⃣ PandasDataFrames_01.ipynb — Intro to Pandas & DataFrame Basics
-Focus: Understanding core Pandas structures (Series & DataFrames), loading data, and extracting initial statistical summaries.
-💡 Key Concepts & Code Examples:
-Creating a DataFrame from a Dictionary:
-import pandas as pd
-
-# Creating a simple dataset manually
-data = {
-    'Product': ['Laptop', 'Mouse', 'Monitor', 'Keyboard'],
-    'Price': [1200, 25, 300, 75],
-    'Stock': [15, 100, 45, 60]
-}
-df = pd.DataFrame(data)
-print(df)
-Inspecting DataFrame Properties:
-df.info()        # Overview of columns, data types, and non-null counts
-df.shape         # Returns (rows, columns) tuple, e.g., (1000, 8)
-df.describe()    # Summary statistics (mean, std, min, max, quartiles)
-Creating Calculated Columns:
-# Calculating Total Stock Value
-df['Total_Value'] = df['Price'] * df['Stock']
-
-2️⃣ PandasDataFrames_02.ipynb — Indexing, Slicing & Filtering
-Focus: Mastering precise data selection techniques using .loc[], .iloc[], and conditional logic.
-💡 Key Concepts & Code Examples:
-Label-Based Indexing with .loc[]: Used to select specific rows and columns by their labels/names.
-# Select rows where 'Price' > 100 and only display 'Product' and 'Price' columns
-high_value = df.loc[df['Price'] > 100, ['Product', 'Price']]
-Position-Based Indexing with .iloc[]: Used to select rows and columns by integer index position (0-indexed).
-# Select first 5 rows and first 3 columns
-subset = df.iloc[0:5, 0:3]
-Boolean Filtering (Multiple Conditions): Combining conditions using & (AND) and | (OR).
-# Filter products with Price > 50 AND Stock < 50
-filtered_df = df[(df['Price'] > 50) & (df['Stock'] < 50)]
-Sorting Data (.sort_values()):
-# Sort dataset by Price in descending order
-sorted_df = df.sort_values(by='Price', ascending=False)
-
-3️⃣ PandasDataFrames_03.ipynb — Data Cleaning & Missing Values
-Focus: Identifying null/missing values, imputing missing data, and handling corrupted values.
-💡 Key Concepts & Code Examples:
-Detecting Missing Data (.isna() / .isnull()):
-# Count total missing values per column
-print(df.isna().sum())
-
-# Percentage of missing data per column
-missing_pct = (df.isna().sum() / len(df)) * 100
-print(missing_pct)
-Filling Missing Values (.fillna()):
-# Fill missing 'Price' values with the column mean
-df['Price'] = df['Price'].fillna(df['Price'].mean())
-
-# Fill missing text categories with 'Unknown'
-df['Category'] = df['Category'].fillna('Unknown')
-Dropping Missing Data (.dropna()):
-# Remove rows where essential identifiers are missing
-cleaned_df = df.dropna(subset=['Product_ID'])
-
-4️⃣ Sales_Data_Analysis.ipynb — Data Aggregation & Grouping
-Focus: Grouping datasets by categorical variables, performing multi-metric calculations, and building basic plots.
-💡 Key Concepts & Code Examples:
-Group Analysis (.groupby()):
-# Calculate total sales revenue per product category
-category_sales = df.groupby('Category')['Total_Value'].sum().reset_index()
-print(category_sales)
-Multiple Aggregations (.agg()):
-# Calculate mean price and total units sold per region
-region_summary = df.groupby('Region').agg({
-    'Price': 'mean',
-    'Stock': 'sum'
-}).rename(columns={'Price': 'Avg_Price', 'Stock': 'Total_Units'})
-Built-in Visualization (matplotlib integration):
-import matplotlib.pyplot as plt
-
-# Plotting total sales by category as a bar chart
-category_sales.plot(kind='bar', x='Category', y='Total_Value', color='skyblue')
-plt.title('Total Sales Revenue by Category')
-plt.xlabel('Category')
-plt.ylabel('Revenue ($)')
-plt.tight_layout()
-plt.show()
-
-🛠️ Key Pandas Methods Quick Reference
-Method
-Description
-Example Usage
-pd.read_csv()
-Load CSV file into a DataFrame
-df = pd.read_csv('data.csv')
-.head(n)
-View first n rows
-df.head(5)
-.info()
-Summary of structure & data types
-df.info()
-.loc[]
-Select rows/cols by label
-df.loc[df['Age'] > 25, 'Name']
-.iloc[]
-Select rows/cols by integer index
-df.iloc[0:10, 1:3]
-.isna().sum()
-Count missing values
-df.isna().sum()
-.fillna()
-Replace missing values
-df['Age'].fillna(df['Age'].median())
-.dropna()
-Remove missing values
-df.dropna()
-.groupby()
-Group rows by column values
-df.groupby('Category').mean()
-.sort_values()
-Sort rows by values
-df.sort_values(by='Sales', ascending=False)
-
-
-🎓 Learning Outcomes
-By completing this repository, I have demonstrated the ability to:
-✅ Load, inspect, and understand complex structured datasets.
-✅ Perform robust data cleaning, handling missing (NaN) values effectively.
-✅ Execute precise filtering, conditional slicing, and index manipulation using .loc[] and .iloc[].
-✅ Aggregate and pivot data using .groupby() to generate actionable insights.
-✅ Visualize key trends and distributions directly from Pandas DataFrames.
-
-🚀 How to Run These Notebooks
-Google Colab (Recommended):
-Click on any .ipynb file in this repository.
-Click the "Open in Colab" badge at the top of the notebook.
-Local Environment (Jupyter Notebook / VS Code):
-# Clone repository
-git clone https://github.com/your-username/python-pandas-exercises.git
-
-# Navigate into project directory
-cd python-pandas-exercises
-
-# Launch Jupyter Notebook
-jupyter notebook
-
-
-eof
+✅ Data Cleaning  
+✅ Data Manipulation  
+✅ Indexing & Filtering  
+✅ Exploratory Data Analysis (EDA)  
+✅ Data Aggregation & Grouping  
+✅ Data Visualisation with Matplotlib
 
 ---
 
-### Что сделано в этой версии:
-1. **Детальные примеры кода (`Python`):** Добавлены реальные фрагменты кода для каждого блока (`loc`/`iloc`, `fillna`, `dropna`, `groupby`, `describe`, `plot`).
-2. **Справочная таблица (Quick Reference):** Собрана сводка главных команд Pandas с их понятным описанием для быстрого повторения.
-3. **Объяснения для новичка:** Каждая функция сопровождена комментарием, что именно она делает на человеческом языке.
-4. **Инструкция по запуску:** Добавлен блок с `git clone` и кнопками Colab.
+## 📑 Table of Contents
 
-Можем сразу разобрать любой блок кода подробнее или перейти к оформлению самого блокнота!
+- [📁 Repository Structure](#-repository-structure)
+- [📓 Notebook Overviews](#-notebook-overviews)
+- [🛠 Pandas Methods Reference](#-pandas-methods-reference)
+- [🎯 Learning Outcomes](#-learning-outcomes)
+- [🚀 Getting Started](#-getting-started)
 
+---
+
+# 📁 Repository Structure
+
+```text
+.
+├── 📄 README.md
+├── 📓 PandasDataFrames_01.ipynb
+├── 📓 PandasDataFrames_02.ipynb
+├── 📓 PandasDataFrames_03.ipynb
+├── 📓 Sales_Data_Analysis.ipynb
+└── 📊 datasets/
+    ├── penguins.csv
+    ├── student.csv
+    └── sales_data.csv
+```
+
+---
+
+# 📓 Notebook Overviews
+
+## 1️⃣ PandasDataFrames_01.ipynb
+### 📚 Introduction to Pandas & DataFrames
+
+Learn the fundamentals of Pandas, including:
+
+- Creating DataFrames
+- Understanding Series and DataFrames
+- Inspecting dataset structure
+- Generating descriptive statistics
+- Creating calculated columns
+
+### Key Skills
+
+🟢 `pd.DataFrame()`  
+🟢 `.info()`  
+🟢 `.shape`  
+🟢 `.describe()`  
+🟢 Column calculations
+
+---
+
+## 2️⃣ PandasDataFrames_02.ipynb
+### 🔍 Indexing, Slicing & Filtering
+
+Explore how to extract and filter data efficiently.
+
+### Key Skills
+
+🟢 `.loc[]` (Label-based indexing)
+
+```python
+df.loc[df['Price'] > 100, ['Product', 'Price']]
+```
+
+🟢 `.iloc[]` (Position-based indexing)
+
+```python
+df.iloc[0:5, 0:3]
+```
+
+🟢 Boolean Filtering
+
+```python
+df[(df['Price'] > 50) & (df['Stock'] < 50)]
+```
+
+🟢 Sorting Data
+
+```python
+df.sort_values(by='Price', ascending=False)
+```
+
+---
+
+## 3️⃣ PandasDataFrames_03.ipynb
+### 🧹 Data Cleaning & Missing Values
+
+Learn how to identify, handle, and clean incomplete datasets.
+
+### Key Skills
+
+🟢 Detecting Missing Values
+
+```python
+df.isna().sum()
+```
+
+🟢 Filling Missing Values
+
+```python
+df['Price'].fillna(df['Price'].mean())
+```
+
+🟢 Replacing Categories
+
+```python
+df['Category'].fillna('Unknown')
+```
+
+🟢 Removing Missing Records
+
+```python
+df.dropna(subset=['Product_ID'])
+```
+
+---
+
+## 4️⃣ Sales_Data_Analysis.ipynb
+### 📈 Data Aggregation & Insights
+
+Perform real-world sales analysis using grouping and aggregation techniques.
+
+### Key Skills
+
+#### Grouping Data
+
+```python
+df.groupby('Category')['Total_Value'].sum()
+```
+
+#### Multiple Aggregations
+
+```python
+df.groupby('Region').agg({
+    'Price': 'mean',
+    'Stock': 'sum'
+})
+```
+
+#### Visualisation
+
+```python
+category_sales.plot(
+    kind='bar',
+    x='Category',
+    y='Total_Value',
+    color='skyblue'
+)
+```
+
+📊 Generate meaningful charts and business insights directly from Pandas DataFrames.
+
+---
+
+# 🛠 Pandas Methods Reference
+
+| Method | Purpose |
+|----------|----------|
+| `pd.read_csv()` | Load CSV data |
+| `.head()` | Preview records |
+| `.info()` | Inspect structure |
+| `.describe()` | Summary statistics |
+| `.loc[]` | Label-based selection |
+| `.iloc[]` | Position-based selection |
+| `.isna()` | Detect missing values |
+| `.fillna()` | Replace missing values |
+| `.dropna()` | Remove missing records |
+| `.groupby()` | Aggregate data |
+| `.sort_values()` | Sort datasets |
+
+---
+
+# 🎯 Learning Outcomes
+
+Through this project, I developed practical experience in:
+
+✅ Loading and exploring structured datasets
+
+✅ Cleaning and preparing real-world data
+
+✅ Handling missing values effectively
+
+✅ Applying filtering and indexing techniques
+
+✅ Performing grouped analysis and aggregations
+
+✅ Generating insights from business datasets
+
+✅ Creating visualisations using Matplotlib
+
+✅ Using Pandas for end-to-end data analysis workflows
+
+---
+
+# 🚀 Getting Started
+
+## Option 1: Google Colab
+
+1. Open any notebook (`.ipynb`)
+2. Click **Open in Colab**
+3. Run cells directly in your browser
+
+---
+
+## Option 2: Local Environment
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/python-pandas-exercises.git
+```
+
+Navigate into the project folder:
+
+```bash
+cd python-pandas-exercises
+```
+
+Launch Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+---
+
+## 🧰 Technologies Used
+
+- 🐍 Python
+- 🐼 Pandas
+- 📓 Jupyter Notebook
+- 📊 Matplotlib
+- 🔢 NumPy
+
+---
+
+## 👨‍💻 Author
+
+Created as part of the **Data Technician Skills Bootcamp** to demonstrate practical data analysis and manipulation skills using Python and Pandas.
+
+⭐ If you found this repository useful, consider
